@@ -1,9 +1,5 @@
 # RedditInsight
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/reddit/reddit.png" alt="Reddit Logo" width="100">
-  <h3>Advanced Reddit analytics and data collection tool</h3>
-</div>
 
 ## Overview
 
