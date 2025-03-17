@@ -1,111 +1,134 @@
 # RedditInsight
 
-A comprehensive analytics tool that gathers threads from Reddit, stores them in a database, and provides in-depth analysis on the collected data.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/reddit/reddit.png" alt="Reddit Logo" width="100">
+  <h3>Advanced Reddit analytics and data collection tool</h3>
+</div>
 
-## Features
+## Overview
 
-- **Reddit Data Collection**: Search and collect posts from Reddit, including titles, content, and comments
-- **Timeframe Selection**: Filter results by time period (week, month, year, or all time)
-- **Sentiment Analysis**: Analyze the sentiment of collected posts (positive, negative, neutral)
-- **Content Analysis**: Extract common words, phrases, and generate summaries
-- **Data Export**: Export results in JSON or CSV format
-- **Database Storage**: Store results in a SQLite database for future reference
-- **Command Line Interface**: Easy-to-use CLI for searching and viewing results
+RedditInsight is a powerful analytics tool that scrapes, collects, and analyzes content from Reddit. Whether you're conducting market research, analyzing trends, or gathering insights on specific topics, RedditInsight provides the data and analysis tools you need.
+
+## Key Features
+
+- 🔍 **Smart Content Collection**: Search and collect Reddit posts, comments, and metadata with customizable search parameters
+- ⏱️ **Flexible Time Filtering**: Analyze content from the past week, month, year, or all time
+- 📊 **Sentiment Analysis**: Automatically analyze and categorize content sentiment using NLTK's VADER
+- 📈 **Content Analysis**: Extract common words, phrases, and generate concise summaries
+- 🔄 **Data Export**: Save your findings in JSON or CSV format for further analysis
+- 💾 **Persistent Storage**: Access historical searches via integrated SQLite database
+- 🖥️ **Dual Interfaces**: Choose between full-featured GUI or lightweight CLI
+
+## Screenshots
+
+*(Coming soon)*
 
 ## Installation
 
 ### Prerequisites
 
 - Python 3.8 or higher
-- pip (Python package manager)
+- Safari browser (for web scraping)
 
-### Setup
+### Setup Instructions
 
-1. Clone this repository or download the source code
-2. Navigate to the project directory
-3. Install the required dependencies:
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/RedditInsight.git
+   cd RedditInsight
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-The `requirements.txt` file includes:
-
-```
-requests
-beautifulsoup4
-selenium
-nltk
-pandas
-python-dateutil
-PyQt6 # For GUI version
-```
-
-### Safari WebDriver Setup
-
-This application uses Safari for web scraping. To enable Safari for automation:
-
-1. Enable the Develop menu in Safari: Safari → Preferences → Advanced → Check "Show Develop menu in menu bar"
-2. Enable Remote Automation: Develop → Allow Remote Automation
-3. Authorize WebDriver: Run `safaridriver --enable` in Terminal
+3. Configure Safari WebDriver:
+   - Enable the Develop menu: Safari → Preferences → Advanced → "Show Develop menu in menu bar"
+   - Enable Remote Automation: Develop → Allow Remote Automation
+   - Authorize WebDriver: Run `safaridriver --enable` in Terminal
 
 ## Usage
 
-### Command Line Interface
+### GUI Mode
 
-Run the CLI version with:
+Launch the graphical user interface for the most user-friendly experience:
 
 ```bash
-python app.py [-k KEYWORD] [-t TIMEFRAME] [-o OUTPUT_FORMAT] [-f FILENAME] [-l LIMIT]
+python run.py
+```
+
+The GUI provides an intuitive interface for searching, viewing results, and generating analyses.
+
+### CLI Mode
+
+For headless environments or simplified usage, use the command-line interface:
+
+```bash
+python run_cli.py
+```
+
+Or with specific parameters:
+
+```bash
+python app.py -k "keyword" -t month -o json -l 20
 ```
 
 Parameters:
-- `-k, --keyword`: Search keyword
-- `-t, --timeframe`: Timeframe for search (week, month, year, all) [default: month]
-- `-o, --output`: Output format (json, csv) [default: json]
-- `-f, --filename`: Output filename without extension
-- `-l, --limit`: Maximum number of results to return [default: 25]
+- `-k, --keyword`: Search keyword (required)
+- `-t, --timeframe`: Timeframe for search (`week`, `month`, `year`, `all`) [default: `month`]
+- `-o, --output`: Output format (`json`, `csv`) [default: `json`]
+- `-f, --filename`: Custom output filename (without extension)
+- `-l, --limit`: Maximum number of results [default: 25]
 
-Example:
-```bash
-python app.py -k "artificial intelligence" -t month -o json -l 20
+## Technical Architecture
+
+RedditInsight is built with a modular architecture that separates data collection, processing, storage, and visualization:
+
+- **scraper.py**: Handles data collection from Reddit using their JSON API
+- **processor.py**: Performs sentiment analysis, word frequency analysis, and content summarization
+- **database.py**: Manages data persistence with SQLite
+- **main.py**: Implements the PyQt6-based GUI
+- **app.py/run_cli.py**: Provides command-line interfaces
+
+### Data Flow
+
+1. User initiates a search with keyword and parameters
+2. RedditScraper collects matching posts from Reddit
+3. Processor analyzes content for sentiment, common terms, and patterns
+4. Results are stored in the SQLite database and displayed to the user
+5. Analysis can be exported in preferred format
+
+## Advanced Usage
+
+### Custom Analysis
+
+The Processor class can be extended to implement custom analysis algorithms:
+
+```python
+from processor import Processor
+
+class CustomProcessor(Processor):
+    def __init__(self):
+        super().__init__()
+        
+    def my_custom_analysis(self, results):
+        # Implement custom analysis logic
+        pass
 ```
-
-If no parameters are provided, the application will prompt for input.
-
-### GUI Application (Coming Soon)
-
-A graphical user interface is under development for easier interaction with the application.
-
-## Technical Details
-
-### Architecture
-
-The application follows a modular structure:
-
-- **scraper.py**: Contains the `RedditScraper` class for collecting data
-- **processor.py**: Analyzes and processes the collected data
-- **database.py**: Manages the SQLite database for storing and retrieving results
-- **app.py**: Command-line interface for the application
-- **main.py**: Main application logic
-- **run.py** and **run_cli.py**: Entry points for different execution modes
-
-### Data Collection Methods
-
-- **Reddit**: Uses Reddit's JSON API to search for posts and comments
-
-### Analysis Components
-
-- **Sentiment Analysis**: Uses NLTK's VADER for sentiment scoring
-- **Word Frequency**: Extracts and counts common words and phrases
-- **Summarization**: Generates concise summaries of the collected content
 
 ## Limitations
 
 - **Rate Limiting**: Excessive requests may be rate-limited by Reddit
-- **Content Accessibility**: Some content may not be accessible due to privacy settings or community restrictions
-- **Data Accuracy**: Sentiment analysis and summarization are approximations and may not perfectly capture the true sentiment or meaning
+- **Content Accessibility**: Private or restricted content cannot be scraped
+- **Analysis Precision**: Sentiment analysis provides approximations based on lexical analysis
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- [NLTK](https://www.nltk.org/) for natural language processing capabilities
+- [PyQt6](https://www.riverbankcomputing.com/software/pyqt/) for the graphical interface
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) for HTML parsing 
