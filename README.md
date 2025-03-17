@@ -1,10 +1,10 @@
-# Reddit Scraper
+# RedditInsight
 
-A web scraping application that gathers threads from Reddit, stores them in a database, and provides analysis on the collected data.
+A comprehensive analytics tool that gathers threads from Reddit, stores them in a database, and provides in-depth analysis on the collected data.
 
 ## Features
 
-- **Reddit Scraping**: Search and collect posts from Reddit, including titles, content, and comments
+- **Reddit Data Collection**: Search and collect posts from Reddit, including titles, content, and comments
 - **Timeframe Selection**: Filter results by time period (week, month, year, or all time)
 - **Sentiment Analysis**: Analyze the sentiment of collected posts (positive, negative, neutral)
 - **Content Analysis**: Extract common words, phrases, and generate summaries
@@ -68,7 +68,7 @@ Parameters:
 
 Example:
 ```bash
-python app.py -k "cursor review" -t month -o json -l 20
+python app.py -k "artificial intelligence" -t month -o json -l 20
 ```
 
 If no parameters are provided, the application will prompt for input.
@@ -87,7 +87,8 @@ The application follows a modular structure:
 - **processor.py**: Analyzes and processes the collected data
 - **database.py**: Manages the SQLite database for storing and retrieving results
 - **app.py**: Command-line interface for the application
-- **gui.py**: Graphical user interface (under development)
+- **main.py**: Main application logic
+- **run.py** and **run_cli.py**: Entry points for different execution modes
 
 ### Data Collection Methods
 
@@ -95,7 +96,7 @@ The application follows a modular structure:
 
 ### Analysis Components
 
-- **Sentiment Analysis**: Uses NLTK's VADER (Valence Aware Dictionary and sEntiment Reasoner) for sentiment scoring
+- **Sentiment Analysis**: Uses NLTK's VADER for sentiment scoring
 - **Word Frequency**: Extracts and counts common words and phrases
 - **Summarization**: Generates concise summaries of the collected content
 
